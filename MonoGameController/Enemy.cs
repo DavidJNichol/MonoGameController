@@ -10,20 +10,49 @@ namespace MonoGameController
 {
     class Enemy : Sprite
     {
+        float turnAmount;
         public Enemy(Game game) : base(game)
         {
             direction = new Vector2(1, 0);
-            startPosition = new Vector2(100, 100);
+            startPosition = new Vector2(20, -20);
             currentPosition = startPosition;
-            speed = 220;
+            speed = 0;
+
+            turnAmount = 2f;
 
             collisionBox = new Rectangle((int)currentPosition.X, (int)currentPosition.Y, 75, 90);
         }
 
         public void ChasePlayer(Player player, float time)
         {
-            direction = player.GetPlayerDirection();
 
+            
+            if (player.GetPosition().Y > currentPosition.Y)
+            {
+                direction.Y = 1;
+                currentPosition.Y = MathHelper.Clamp(currentPosition.Y += turnAmount, -50, player.GetPosition().Y + 200);
+            }
+            else
+            {
+                //direction.Y = -1;
+                currentPosition.Y = MathHelper.Clamp(currentPosition.Y -= turnAmount, -50, player.GetPosition().Y + 200);
+            }
+            if (player.GetPosition().X > currentPosition.X)
+            {
+                //direction.X = 1;
+                currentPosition.X = MathHelper.Clamp(currentPosition.X += turnAmount, player.GetPosition().X -400, 800);
+            }
+            else
+            {
+                //direction.X = -1;
+                currentPosition.X = MathHelper.Clamp(currentPosition.X -= turnAmount, player.GetPosition().X -400, 800);
+            }
+            //MoveEnemy(time);
+
+        }
+
+        public void MoveEnemy(float time)
+        {
             velocity = 0;
             acceleration = .01f;
             acceleration += .5f;
@@ -46,6 +75,7 @@ namespace MonoGameController
         {
             return currentPosition;
         }
+               
 
 
     }

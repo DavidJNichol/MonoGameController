@@ -18,7 +18,8 @@ namespace MonoGameController
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             gm = new GameManager(this);
-            
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 800;
 
             
         }
@@ -32,7 +33,8 @@ namespace MonoGameController
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            Components.Add(gm.playerController);
+            Components.Add(gm.enemyController);
             base.Initialize();
         }
 
@@ -73,9 +75,9 @@ namespace MonoGameController
 
             time = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            gm.playerController.MovePlayer(time);
+            //gm.playerController.MovePlayer(time);
 
-            gm.playerController.KeepInBoundries(graphics);
+            //gm.playerController.KeepInBoundries(graphics);
 
             gm.enemyController.ChasePlayer(gm.playerController.GetPlayer(), time);
 

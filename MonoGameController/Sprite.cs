@@ -16,9 +16,10 @@ namespace MonoGameController
         protected float speed { get; set; }
         protected float acceleration { get; set; }
         protected float velocity { get; set; }
-        protected Vector2 direction { get; set; }
-        protected Vector2 startPosition { get; set; }
-        protected Vector2 currentPosition { get; set; }
+        protected Vector2 direction;
+        protected Vector2 startPosition;
+
+        protected Vector2 currentPosition;
         protected Rectangle collisionBox { get; set; }
 
         public Sprite(Game game) : base(game)
@@ -26,11 +27,13 @@ namespace MonoGameController
             spriteEffects = new SpriteEffects();
         }
 
-        public bool IsOffScreen(Vector2 spritePosition, Texture2D spriteTexture, GraphicsDeviceManager graphics)
+        public bool IsOffScreen(Vector2 spritePosition, Texture2D spriteTexture)
         {
-            if (spritePosition.X > graphics.GraphicsDevice.Viewport.Width - spriteTexture.Width 
+            //graphics.GraphicsDevice.Viewport.Width = 1200
+            //graphics.GraphicsDevice.Viewport.Height = 800
+            if (spritePosition.X > 1200 - spriteTexture.Width 
                 || spritePosition.X < 0 
-                || spritePosition.Y > graphics.GraphicsDevice.Viewport.Height - spriteTexture.Height 
+                || spritePosition.Y > 800 - spriteTexture.Height 
                 || spritePosition.Y < 0)
             {
                 return true;

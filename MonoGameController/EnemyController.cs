@@ -11,9 +11,14 @@ namespace MonoGameController
     class EnemyController : Microsoft.Xna.Framework.GameComponent
     {
         Enemy enemy;
+
+        PlayerController playerController;
+
         public EnemyController(Game game) : base(game)
         {
             enemy = new Enemy(game);
+
+            playerController = new PlayerController(game);
         }
 
         public void ChasePlayer(Player player, float time)

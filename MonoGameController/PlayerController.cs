@@ -12,9 +12,12 @@ namespace MonoGameController
     {
         private Player player;
 
+        
+
+
         public PlayerController(Game game) : base(game)
         {
-            player = new Player(game);
+            player = new Player(game);        
         }
 
         public void MovePlayer(float time)
@@ -37,9 +40,9 @@ namespace MonoGameController
             return player.GetPosition();
         }
 
-        public void KeepInBoundries(GraphicsDeviceManager graphics)
+        public void KeepInBoundries()
         {
-            player.KeepInBoundries(graphics);
+            player.KeepInBoundries();
         }
 
         public Player GetPlayer()
@@ -50,6 +53,18 @@ namespace MonoGameController
         public Vector2 GetPlayerDirection()
         {
             return player.GetPlayerDirection();
+        }
+
+        float time;
+        public override void Update(GameTime gameTime)
+        {
+            time = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            MovePlayer(time);
+
+            KeepInBoundries();
+
+            base.Update(gameTime);
         }
     }
 }

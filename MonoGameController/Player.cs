@@ -17,9 +17,9 @@ namespace MonoGameController
             inputHandler = new InputHandler();
 
             direction = new Vector2(1, 0);
-            startPosition = new Vector2(20, 20);
+            startPosition = new Vector2(200, 200);
             currentPosition = startPosition;
-            speed = 210;
+            speed = 250;
 
             collisionBox = new Rectangle((int)currentPosition.X, (int)currentPosition.Y, 53, 85);
         }
@@ -79,9 +79,9 @@ namespace MonoGameController
             return currentPosition;
         }
 
-        public void KeepInBoundries(GraphicsDeviceManager graphics)
+        public void KeepInBoundries()
         {
-            if(IsOffScreen(currentPosition, spriteTexture, graphics))
+            if(IsOffScreen(currentPosition, spriteTexture))
                 currentPosition = startPosition;            
         }
 
