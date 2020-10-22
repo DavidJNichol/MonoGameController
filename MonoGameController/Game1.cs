@@ -48,6 +48,7 @@ namespace MonoGameController
             spriteBatch = new SpriteBatch(GraphicsDevice);
             gm.playerController.SetPlayerTexture(Content);
             gm.enemyController.SetEnemyTexture(Content);
+            gm.enemyController.SetFont(Content);
             
             // TODO: use this.Content to load your game content here
         }
@@ -75,12 +76,18 @@ namespace MonoGameController
 
             time = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            //gm.playerController.MovePlayer(time);
+          
 
-            //gm.playerController.KeepInBoundries(graphics);
+            /* Had to put these enemyController methods into Game1 Update beacause the 
+             * playerController reference I would use in enemyController's update method 
+               does not take into account the updated variables in playercontroller's
+               Update method. 
+            */
 
-            gm.enemyController.ChasePlayer(gm.playerController.GetPlayer(), time);
-
+            gm.enemyController.UpdateEnemyCollisionBox();
+            gm.enemyController.CheckState(gm.playerController.GetPlayer(), time);
+            gm.enemyController.CheckCollisionWithPlayer(gm.playerController.GetPlayer());
+            
 
             // TODO: Add your update logic here
 
@@ -93,14 +100,7 @@ namespace MonoGameController
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
-            spriteBatch.Draw(gm.playerController.GetPlayerTexture(), gm.playerController.GetPlayerPosition(), Color.White);
-            spriteBatch.Draw(gm.enemyController.GetEnemyTexture(), gm.enemyController.GetPosition(), Color.White);
-            spriteBatch.End();
-
-            // TODO: Add your drawing code here
+            GraphicsDevice.Clear(Color.DarkCyan);
 
             base.Draw(gameTime);
         }

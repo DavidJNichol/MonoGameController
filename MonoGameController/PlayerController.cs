@@ -1,33 +1,31 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGameController
 {
-    class PlayerController : Microsoft.Xna.Framework.GameComponent
+    class PlayerController : Microsoft.Xna.Framework.DrawableGameComponent
     {
         private Player player;
 
-        
-
+        private SpriteBatch spriteBatch;
 
         public PlayerController(Game game) : base(game)
         {
             player = new Player(game);        
         }
-
-        public void MovePlayer(float time)
+        private void MovePlayer(float time)
         {
             player.MovePlayer(time);
         }
 
-        public Texture2D GetPlayerTexture()
+        private Texture2D GetPlayerTexture()
         {
             return player.GetTexture();
+        }
+
+        private void KeepInBoundries()
+        {
+            player.KeepInBoundries();
         }
 
         public void SetPlayerTexture(Microsoft.Xna.Framework.Content.ContentManager content)
@@ -38,21 +36,17 @@ namespace MonoGameController
         public Vector2 GetPlayerPosition()
         {
             return player.GetPosition();
-        }
-
-        public void KeepInBoundries()
-        {
-            player.KeepInBoundries();
-        }
+        }       
 
         public Player GetPlayer()
         {
             return player;
-        }
+        } 
 
-        public Vector2 GetPlayerDirection()
+        protected override void LoadContent()
         {
-            return player.GetPlayerDirection();
+            base.LoadContent();
+            spriteBatch = new SpriteBatch(this.Game.GraphicsDevice);
         }
 
         float time;
@@ -64,7 +58,18 @@ namespace MonoGameController
 
             KeepInBoundries();
 
+            //Upate collision box location
+            player.UpdatePlayerRectangle();
+
             base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(GetPlayerTexture(), GetPlayerPosition(), Color.White);
+            spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonoGameController
 {
@@ -18,9 +13,8 @@ namespace MonoGameController
         protected float velocity { get; set; }
         protected Vector2 direction;
         protected Vector2 startPosition;
-
         protected Vector2 currentPosition;
-        protected Rectangle collisionBox { get; set; }
+        protected Rectangle collisionBox;
 
         public Sprite(Game game) : base(game)
         {
